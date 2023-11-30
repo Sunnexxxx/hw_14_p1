@@ -3,11 +3,20 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <h2>Создание нового поста</h2>
-<form method="post" action="{% url 'create_post' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Создать пост</button>
-</form>
+{#    <h2>Создание нового поста</h2>#}
+{#<form method="post" action="{% url 'create_post' %}">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <button type="submit">Создать пост</button>#}
+{#</form>#}
+    <h1>Create Post</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="{% url 'post_list' %}">Cancel</a>
 
 {% endblock %}

@@ -1,13 +1,31 @@
 {% extends 'blog/layout.html' %}
-
-{% block title %}{% endblock %}
-
 {% block content %}
-    {% for post in posts %}
-    <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-    <p>Автор: {{ post.author.name }}</p>
-    <p>Лайки: {{ post.likes }}</p>
-{% endfor %}
-    <a href="{% url 'create_post' %}">Create</a>
+    <h1>Post List</h1>
 
+    <div>
+        <form method="get">
+            <label for="tag">Filter by Tag:</label>
+            <select name="tag" id="tag">
+                <option value="">All Tags</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.name }}" {% if tag.name == selected_tag %}selected{% endif %}>
+                        {{ tag.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    {% for post in posts %}
+        <div>
+            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.text }}</p>
+            <p>Likes: {{ post.likes }}</p>
+            <p>Tags: {{ post.tags.all|join:", " }}</p>
+             <a href="{% url 'post_delete' post.pk %}">Delete</a>
+            <a href="{% url 'post_update' post.pk %}">Update</a>
+        </div>
+    {% endfor %}
+    <a href="{% url 'create_post' %}">Create</a>
 {% endblock %}
